@@ -1,0 +1,22 @@
+[View code on GitHub](/src/pages/agent/index.tsx)
+
+The `AgentPage` component is a React functional component that renders a chat window for a specific agent, along with buttons to share, delete, and go back to the main page. The component imports several modules, including `NextPage` from the `next` package, `DefaultLayout` from a custom layout module, `Button` from a custom button component, `React` and `useState` from the `react` package, `useRouter` from the `next/router` package, `api` from a custom API module, `ChatWindow` from a custom chat window component, `Message` from a custom message type module, `Toast` from a custom toast component, and `FaTrash`, `FaShare`, and `FaBackspace` from the `react-icons/fa` package.
+
+The component first defines a state variable `showCopied` using the `useState` hook, which is used to toggle the display of a toast message when the share button is clicked. It then uses the `useRouter` hook to get the `id` parameter from the query string, which is used to fetch the agent data from the API using the `getAgent` query. The `getAgent` query is only enabled when the router is ready, which ensures that the `agentId` variable is properly initialized. The component also defines a `deleteAgent` mutation that is used to delete the agent when the delete button is clicked. The `onSuccess` callback of the `deleteAgent` mutation redirects the user to the main page.
+
+The component then extracts the `tasks` property from the `getAgent.data` object and assigns it to the `messages` variable. The `messages` variable is an array of `Message` objects that represent the chat history for the agent. The component then defines a `shareLink` function that returns a URL-encoded link to the current page, which is used when the share button is clicked.
+
+The component then renders a `DefaultLayout` component that contains a `ChatWindow` component, a row of buttons, and a `Toast` component. The `ChatWindow` component displays the chat history for the agent, along with the agent's name as the title. The `showDonation` prop is set to `false`, which hides the donation button. The `className` prop sets the width and height of the chat window, as well as the gap between the chat window and the buttons. The `fullscreen` prop is set to `true`, which makes the chat window take up the entire screen.
+
+The row of buttons contains three `Button` components, each with an icon and a label. The first button has a share icon and calls the `window.navigator.clipboard.writeText` method to copy the share link to the clipboard when clicked. The second button has a trash icon and calls the `deleteAgent.mutate` method to delete the agent when clicked. The third button has a backspace icon and calls the `router.push` method to navigate back to the main page when clicked.
+
+The `Toast` component displays a message when the share link is copied to the clipboard. The `model` prop is set to `[showCopied, setShowCopied]`, which binds the `showCopied` state variable to the `Toast` component. The `title` prop sets the message to display in the toast, and the `className` prop sets the background color and text size of the toast.
+## Questions: 
+ 1. What is the purpose of this code and what does it do?
+- This code defines a Next.js page component called `AgentPage` that renders a chat window and buttons for sharing, deleting, and navigating back to the homepage. It also uses various hooks and functions from Next.js and other libraries to fetch data from an API and handle user interactions.
+
+2. What dependencies and libraries are being imported in this code?
+- This code imports several modules from Next.js, including `NextPage`, `useRouter`, and `DefaultLayout`. It also imports components and icons from other libraries such as `Button` from a custom component library, `ChatWindow` from a custom component, and `FaTrash` from `react-icons/fa`. Additionally, it imports a custom `api` module and a `Toast` component.
+
+3. What data is being fetched from the API and how is it being used?
+- This code uses the `getAgent` query from the `api` module to fetch data about an agent with a specific ID, which is obtained from the `router` object. The resulting data is stored in the `messages` variable and passed as a prop to the `ChatWindow` component. The `deleteAgent` mutation is also defined using the `api` module and is called when the user clicks the "Delete" button.
